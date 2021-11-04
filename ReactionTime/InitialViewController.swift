@@ -2,8 +2,7 @@
 //  InitialViewController.swift
 //  ReactionTime
 //
-//  Created by Robert D. Brown on 10/25/17.
-//  Copyright © 2017 Robert D. Brown. All rights reserved.
+//  Created by Robert D. Brown
 //
 
 import UIKit
@@ -17,6 +16,10 @@ class InitialViewController: UIViewController {
 
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        textField.text = ""
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let nvc = segue.destination as! TableViewController
         if let name = textField.text {

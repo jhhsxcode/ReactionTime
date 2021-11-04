@@ -2,7 +2,7 @@
 //  SceneDelegate.swift
 //  ReactionTime
 //
-//  Created by Robert D. Brown on 11/4/21.
+//  Created by Robert D. Brown 
 //
 
 import UIKit

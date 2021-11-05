@@ -117,7 +117,7 @@ class ViewController: UIViewController {
         timer.invalidate()
         
         
-        let score = String(format: "%.3f", timeCounter * Double(levelLabel.text!)!)
+        let score = String(format: "%.3f", timeCounter * pow(Double(level),2))
         scoreLabel.text = "\(score)"
     }
 }

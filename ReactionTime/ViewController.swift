@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  ReactionTime
 //
-//  Created by Robert D. Brown 
+//  Created by Robert D. Brown
 //
 
 import UIKit
@@ -11,6 +11,9 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var slider: UISlider!
+    @IBOutlet weak var levelLabel: UILabel!
+    @IBOutlet weak var scoreLabel: UILabel!
+    
     @IBOutlet var buttonCollection: [UIButton]!
     
     var gamePlayed = false
@@ -20,6 +23,7 @@ class ViewController: UIViewController {
     var buttonTimer = Timer()
     var tapCounter = 0
     var name = String()
+    var level = Float()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +35,9 @@ class ViewController: UIViewController {
         buttonCollection.first?.alpha = 1.0
         
         navigationItem.rightBarButtonItem?.title = ""
+        
+        levelLabel.text = "2"
+        level = 2
     }
     
     
@@ -51,6 +58,7 @@ class ViewController: UIViewController {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
+        
         if gamePlayed {
             passedArrayOf.scores.append(timeCounter)
             passedArrayOf.names.append(name)
@@ -59,14 +67,21 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func whenSliderMoved(_ sender: UISlider) {
+        level = sender.value
+        let formattedLevel = String(format: "%.2f", level)
+        levelLabel.text = formattedLevel
+    }
+    
     func updateCloud() {
-        //Code here to write data to firebase
+        //Add code to connect to firebase
     }
     
     @IBAction func buttonWasClicked(_ sender: UIButton) {
         
         if tapCounter == 0 {
             startTimer()
+            
         }
         
         tapCounter += 1
@@ -84,13 +99,13 @@ class ViewController: UIViewController {
     }
     
     func startTimer() {
-        timer = Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true, block: { (time) in
-            self.timeCounter += 0.001
-            self.timeLabel.text = String(format: "%.3f", self.timeCounter)
+        timer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true, block: { (time) in
+            self.timeCounter += 0.01
+            self.timeLabel.text = String(format: "%.2f", self.timeCounter)
         })
         
         
-        buttonTimer = Timer.scheduledTimer(withTimeInterval: TimeInterval(slider.value), repeats: true) { (timer) in
+        buttonTimer = Timer.scheduledTimer(withTimeInterval: TimeInterval(slider.value - 1), repeats: true) { (timer) in
                 let randomNumber = Int.random(in: 0..<self.buttonCollection.count)
                 self.hideAllButtons()
                 self.buttonCollection[Int(randomNumber)].alpha = 1.0
@@ -100,6 +115,9 @@ class ViewController: UIViewController {
     
     func stopTimer() {
         timer.invalidate()
+        let score = String(format: "%.3f", timeCounter * Double(levelLabel.text!)!)
+        
+        scoreLabel.text = "\(score)"
     }
 }
 

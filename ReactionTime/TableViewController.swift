@@ -2,7 +2,7 @@
 //  TableViewController.swift
 //  ReactionTime
 //
-//  Created by Robert D. Brown
+//  Created by Robert D. Brown 
 //
 
 import UIKit
@@ -32,7 +32,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         arrayOf.names.removeAll()
         arrayOf.levels.removeAll()
         
-        //Code Here to Connect to Firebase and get scores
+        //Add code to connect to firebase
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -41,9 +41,13 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath)
-        cell.textLabel?.text = "\(arrayOf.names[indexPath.row])"
-        let formattedTime = String(format: "%.3f", arrayOf.scores[indexPath.row])
-        cell.detailTextLabel?.text = "Time:\(formattedTime)"
+        
+        let score = arrayOf.scores[indexPath.row] * Double(arrayOf.levels[indexPath.row])
+        let formattedScore = String(format: "%.3f", score)
+        cell.textLabel?.text = "\(arrayOf.names[indexPath.row]) - \(formattedScore)"
+        
+        let formattedTime = String(format: "%.2f", arrayOf.scores[indexPath.row])
+        cell.detailTextLabel?.text = "Time:\(formattedTime) at Level:\(arrayOf.levels[indexPath.row])"
         
         return cell
     }
@@ -53,12 +57,12 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         if segue.identifier == "gamePlaySegue" {
             let nvc = segue.destination as! ViewController
             nvc.passedArrayOf = arrayOf
             nvc.name = name
         }
+        
     }
     
 }

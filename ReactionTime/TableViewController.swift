@@ -41,13 +41,10 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath)
-        
-        let score = arrayOf.scores[indexPath.row] * Double(arrayOf.levels[indexPath.row])
-        let formattedScore = String(format: "%.3f", score)
-        cell.textLabel?.text = "\(arrayOf.names[indexPath.row]) - \(formattedScore)"
+        cell.textLabel?.text = "\(arrayOf.names[indexPath.row])"
         
         let formattedTime = String(format: "%.2f", arrayOf.scores[indexPath.row])
-        cell.detailTextLabel?.text = "Time:\(formattedTime) at Level:\(arrayOf.levels[indexPath.row])"
+        cell.detailTextLabel?.text = "Time:\(formattedTime)"
         
         return cell
     }

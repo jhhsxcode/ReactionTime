@@ -115,8 +115,9 @@ class ViewController: UIViewController {
     
     func stopTimer() {
         timer.invalidate()
-        let score = String(format: "%.3f", timeCounter * Double(levelLabel.text!)!)
         
+        
+        let score = String(format: "%.3f", timeCounter * Double(levelLabel.text!)!)
         scoreLabel.text = "\(score)"
     }
 }
